@@ -1,0 +1,104 @@
+#
+# Conditional build:
+%bcond_without	python2 # CPython 2.x module
+%bcond_without	python3 # CPython 3.x module
+
+%define 	module	remoto
+Summary:	Execute remote commands or processes
+Name:		python-%{module}
+Version:	0.0.25
+Release:	0.1
+License:	MIT
+Group:		Libraries/Python
+Source0:	https://pypi.python.org/packages/source/r/remoto/%{module}-%{version}.tar.gz
+# Source0-md5:	94fa964c08d9c4619ef63201c58091e3
+URL:		https://github.com/alfredodeza/remoto
+BuildRequires:	rpm-pythonprov
+BuildRequires:	rpmbuild(macros) >= 1.219
+%if %{with python2}
+BuildRequires:	python-setuptools >= 7.0
+%endif
+%if %{with python3}
+BuildRequires:	python3-modules
+BuildRequires:	python3-setuptools >= 7.0
+%endif
+Requires:	python-execnet
+BuildArch:	noarch
+BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+
+%description
+A very simplistic remote-command-executor using ssh and Python in the
+remote end.
+
+All the heavy lifting is done by execnet, while this minimal API
+provides the bare minimum to handle easy logging and connections from
+the remote end.
+
+%package -n python3-%{module}
+Summary:	Execute remote commands or processes
+Group:		Libraries/Python
+Requires:	python3-execnet
+
+%description -n python3-%{module}
+A very simplistic remote-command-executor using ssh and Python in the
+remote end.
+
+All the heavy lifting is done by execnet, while this minimal API
+provides the bare minimum to handle easy logging and connections from
+the remote end.
+
+%prep
+%setup -q -n %{module}-%{version}
+
+%build
+export REMOTO_NO_VENDOR=1
+%if %{with python2}
+%{__python} setup.py build --build-base build-2
+%endif
+
+%if %{with python3}
+%{__python3} setup.py build --build-base build-3
+%endif
+
+%install
+rm -rf $RPM_BUILD_ROOT
+
+export REMOTO_NO_VENDOR=1
+%if %{with python2}
+%{__python} setup.py \
+	build --build-base build-2 \
+	install --skip-build \
+	--optimize=2 \
+	--root=$RPM_BUILD_ROOT
+# no %%py_postclean !
+# remoto needs the source code to run it on the target
+%endif
+
+%if %{with python3}
+%{__python3} setup.py \
+	build --build-base build-3 \
+	install --skip-build \
+	--optimize=2 \
+	--root=$RPM_BUILD_ROOT
+%endif
+
+%clean
+rm -rf $RPM_BUILD_ROOT
+
+%if %{with python2}
+%files
+%defattr(644,root,root,755)
+%doc README.rst
+%{py_sitescriptdir}/%{module}
+%if "%{py_ver}" > "2.4"
+%{py_sitescriptdir}/%{module}-%{version}-py*.egg-info
+%endif
+%endif
+
+%if %{with python3}
+%files -n python3-%{module}
+%defattr(644,root,root,755)
+%doc README.rst
+%{py3_sitescriptdir}/%{module}
+%{py3_sitescriptdir}/%{module}-%{version}-py*.egg-info
+%endif
