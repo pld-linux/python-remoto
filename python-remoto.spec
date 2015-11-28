@@ -53,11 +53,11 @@ the remote end.
 %build
 export REMOTO_NO_VENDOR=1
 %if %{with python2}
-%{__python} setup.py build --build-base build-2
+%py_build
 %endif
 
 %if %{with python3}
-%{__python3} setup.py build --build-base build-3
+%py3_build
 %endif
 
 %install
@@ -65,21 +65,13 @@ rm -rf $RPM_BUILD_ROOT
 
 export REMOTO_NO_VENDOR=1
 %if %{with python2}
-%{__python} setup.py \
-	build --build-base build-2 \
-	install --skip-build \
-	--optimize=2 \
-	--root=$RPM_BUILD_ROOT
+%py_install
 # no %%py_postclean !
 # remoto needs the source code to run it on the target
 %endif
 
 %if %{with python3}
-%{__python3} setup.py \
-	build --build-base build-3 \
-	install --skip-build \
-	--optimize=2 \
-	--root=$RPM_BUILD_ROOT
+%py3_install
 %endif
 
 %clean
