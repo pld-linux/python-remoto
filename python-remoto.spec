@@ -14,7 +14,7 @@ Source0:	https://pypi.python.org/packages/source/r/remoto/%{module}-%{version}.t
 # Source0-md5:	94fa964c08d9c4619ef63201c58091e3
 URL:		https://github.com/alfredodeza/remoto
 BuildRequires:	rpm-pythonprov
-BuildRequires:	rpmbuild(macros) >= 1.219
+BuildRequires:	rpmbuild(macros) >= 1.710
 %if %{with python2}
 BuildRequires:	python-setuptools >= 7.0
 %endif
