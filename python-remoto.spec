@@ -7,7 +7,7 @@
 Summary:	Execute remote commands or processes
 Name:		python-%{module}
 Version:	0.0.25
-Release:	5
+Release:	6
 License:	MIT
 Group:		Libraries/Python
 Source0:	https://pypi.python.org/packages/source/r/remoto/%{module}-%{version}.tar.gz
