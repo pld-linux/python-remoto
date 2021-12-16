@@ -5,6 +5,7 @@
 
 %define 	module	remoto
 Summary:	Execute remote commands or processes
+Summary(pl.UTF-8):	Uruchamianie zdalnych poleceń lub procesów
 Name:		python-%{module}
 Version:	0.0.25
 Release:	7
@@ -34,8 +35,17 @@ All the heavy lifting is done by execnet, while this minimal API
 provides the bare minimum to handle easy logging and connections from
 the remote end.
 
+%description -l pl.UTF-8
+Bardzo proste narzędzie do uruchamiania zdalnych poleceń przez SSH z
+Pythonem po drugiej stronie.
+
+Cała ciężka robota jest wykonywana przez execnet, a ten moduł jest
+minimalnym API zapewniającym minimum do obsługi łatwego logowania i
+połączeń ze zdalnej strony.
+
 %package -n python3-%{module}
 Summary:	Execute remote commands or processes
+Summary(pl.UTF-8):	Uruchamianie zdalnych poleceń lub procesów
 Group:		Libraries/Python
 Requires:	python3-execnet
 
@@ -46,6 +56,14 @@ remote end.
 All the heavy lifting is done by execnet, while this minimal API
 provides the bare minimum to handle easy logging and connections from
 the remote end.
+
+%description -n python3-%{module} -l pl.UTF-8
+Bardzo proste narzędzie do uruchamiania zdalnych poleceń przez SSH z
+Pythonem po drugiej stronie.
+
+Cała ciężka robota jest wykonywana przez execnet, a ten moduł jest
+minimalnym API zapewniającym minimum do obsługi łatwego logowania i
+połączeń ze zdalnej strony.
 
 %prep
 %setup -q -n %{module}-%{version}
