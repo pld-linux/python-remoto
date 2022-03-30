@@ -8,7 +8,7 @@ Summary:	Execute remote commands or processes
 Summary(pl.UTF-8):	Uruchamianie zdalnych poleceń lub procesów
 Name:		python-%{module}
 Version:	0.0.25
-Release:	9
+Release:	10
 License:	MIT
 Group:		Libraries/Python
 Source0:	https://pypi.python.org/packages/source/r/remoto/%{module}-%{version}.tar.gz
